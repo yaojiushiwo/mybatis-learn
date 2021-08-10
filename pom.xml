@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.oneby</groupId>
+    <artifactId>mybatis-learn</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>1.mybatis-getting-start</module>
+        <module>2.mybatis-dao</module>
+        <module>3.mybatis-mapper</module>
+        <module>4.mybatis-config</module>
+        <module>5.mybatis-multi</module>
+        <module>6.mybatis-annotation</module>
+    </modules>
+
+
+</project>

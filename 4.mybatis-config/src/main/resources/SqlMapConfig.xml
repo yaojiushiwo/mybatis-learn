@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 加载外部配置文件 -->
+    <properties resource="jdbc.properties"/>
+
+    <!-- 配置实体类别名 -->
+    <typeAliases>
+        <typeAlias type="com.oneby.domain.User" alias="User"/>
+    </typeAliases>
+
+    <!-- 注册自定义类型处理器 -->
+    <typeHandlers>
+        <typeHandler handler="com.oneby.handler.DateTypeHandler"></typeHandler>
+    </typeHandlers>
+
+    <!-- 配置插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- 指定数据库方言 -->
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+
+    <!-- 配置数据源环境 -->
+    <environments default="developement">
+        <environment id="developement">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 加载 Mapper 映射文件 -->
+    <mappers>
+        <mapper resource="com/oneby/mapper/UserMapper.xml"/>
+    </mappers>
+
+</configuration>

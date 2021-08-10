@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oneby.dao.OrderMapper">
+
+    <!-- 由于 Order 类中包含一个 User 类型的字段，因此需要定义查询结果集中各列与 User 对象中各字段的对应关系 -->
+    <resultMap id="orderMap" type="Order">
+        <!--
+            手动指定字段与实体属性的映射关系：<id> 标签用于标识主键列，<result> 标签用于标识普通列
+                <id> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+                <result> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+        -->
+        <id column="oid" property="id"></id>
+        <result column="ordertime" property="ordertime"></result>
+        <result column="total" property="total"></result>
+        <result column="uid" property="user.id"></result>
+        <result column="username" property="user.username"></result>
+        <result column="password" property="user.password"></result>
+        <result column="birthday" property="user.birthday"></result>
+
+        <!--
+            <association> 标签用于进行实体关系的映射，其中：
+                property 属性: 当前实体(Order)中的属性名称(private User user)
+                javaType 属性: 当前实体(Order)中的属性的类型(User)
+            <id> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+            <result> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+        -->
+        <!--<association property="user" javaType="User">
+            <id column="uid" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="password" property="password"></result>
+            <result column="birthday" property="birthday"></result>
+        </association>-->
+    </resultMap>
+
+    <!-- 指定结果集映射关系为 orderMap -->
+    <select id="findAll" resultMap="orderMap">
+         SELECT *, o.id oid FROM t_order o, t_user u WHERE o.uid = u.id
+    </select>
+
+</mapper>

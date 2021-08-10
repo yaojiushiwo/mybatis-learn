@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oneby.dao.UserMapper">
+
+    <!-- 由于 User 类中包含一个 List<Order> 类型的字段，因此需要定义查询结果集中的字段如何封装到 List<Order> 集合中 -->
+    <resultMap id="userMap" type="User">
+        <!--
+            手动指定字段与实体属性的映射关系：<id> 标签用于标识主键列，<result> 标签用于标识普通列
+                <id> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+                <result> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+        -->
+        <id column="uid" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="birthday" property="birthday"></result>
+        <!--
+            <collection> 标签用于封装集合类型的字段，其中：
+                property 属性：集合字段名称（private List<Order> orders）
+                ofType 属性：集合中存储的数据类型（Order）
+            <id> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+            <result> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+            orderList
+        -->
+        <collection property="orderList" ofType="Order">
+            <id column="oid" property="id"></id>
+            <result column="ordertime" property="ordertime"></result>
+            <result column="total" property="total"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="userMap">
+        SELECT *, o.id oid FROM t_user u, t_order o WHERE u.id = o.uid
+    </select>
+
+    <resultMap id="userRoleMap" type="User">
+        <!--
+            手动指定字段与实体属性的映射关系：<id> 标签用于标识主键列，<result> 标签用于标识普通列
+                <id> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+                <result> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+        -->
+        <id column="userId" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="birthday" property="birthday"></result>
+        <!--
+            <collection> 标签用于封装集合类型的字段，其中：
+                property 属性：集合字段名称（private List<Order> orders）
+                ofType 属性：集合中存储的数据类型（Order）
+            <id> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+            <result> 标签：column 属性指定结果集中的列名；property 指定实体的属性名称，支持级联属性
+        -->
+        <collection property="roleList" ofType="Role">
+            <id column="roleId" property="id"></id>
+            <result column="roleName" property="roleName"></result>
+            <result column="roleDesc" property="roleDesc"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findUserAndRoleAll" resultMap="userRoleMap">
+        SELECT * FROM t_user u, t_user_role ur, t_role r WHERE u.id = ur.userId AND ur.roleId = r.id
+    </select>
+
+</mapper>
