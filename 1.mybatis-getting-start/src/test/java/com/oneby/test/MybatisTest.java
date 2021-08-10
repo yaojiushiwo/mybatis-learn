@@ -32,6 +32,7 @@ public class MybatisTest {
         sqlSession.close();
 
         System.out.println("master test...");
+        System.out.println("hot-fix test...");
     }
 
     @Test
